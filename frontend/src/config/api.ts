@@ -9,9 +9,12 @@ export const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 /**
  * Cria instância do axios com configurações padrão
+ * baseURL: '/api' em produção (proxy Nginx) ou VITE_API_URL em desenvolvimento
+ * withCredentials: true para enviar cookies/credenciais nas requisições
  */
 const api: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
