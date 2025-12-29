@@ -15,10 +15,30 @@ export function createApp(): Express {
   // Middleware para parsing JSON
   app.use(express.json());
 
-  // CORS - permite apenas requisições do frontend configurado
+  // CORS - permite requisições do frontend configurado
+  // Suporta múltiplas origens separadas por vírgula ou uma única origem
+  const allowedOrigins = env.FRONTEND_URL.split(',').map((url) => url.trim());
+  
   app.use(
     cors({
-      origin: env.FRONTEND_URL,
+      origin: (origin, callback) => {
+        // Permite requisições sem origin (ex: Postman, mobile apps)
+        if (!origin) {
+          return callback(null, true);
+        }
+        
+        // Verifica se a origem está na lista permitida
+        if (allowedOrigins.includes(origin)) {
+          return callback(null, true);
+        }
+        
+        // Em produção, também aceita o domínio principal
+        if (origin.includes('ifmaquadra.lualabs.com.br')) {
+          return callback(null, true);
+        }
+        
+        callback(new Error('Not allowed by CORS'));
+      },
       credentials: true,
     })
   );
