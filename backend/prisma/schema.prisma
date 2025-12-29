@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String         @id @default(cuid())
+  name               String
+  email              String         @unique
+  username           String?        @unique
+  passwordHash       String         @map("password_hash")
+  role               Role
+  whatsapp           String?
+  birthDate          DateTime?      @map("birth_date")
+  emailVerified      Boolean        @default(false) @map("email_verified")
+  verificationCode   String?        @map("verification_code")
+  verificationExpires DateTime?     @map("verification_expires")
+  createdAt          DateTime       @default(now()) @updatedAt @map("created_at")
+  updatedAt          DateTime       @updatedAt @map("updated_at")
+  requests           CourtRequest[]
+
+  @@map("users")
+}
+
+model CourtRequest {
+  id               String        @id @default(cuid())
+  userId           String        @map("user_id")
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date             DateTime
+  startTime        String        @map("start_time")
+  endTime          String        @map("end_time")
+  status           RequestStatus @default(PENDING)
+  adminObservation String?       @map("admin_observation")
+  createdAt        DateTime      @default(now()) @map("created_at")
+  updatedAt        DateTime      @updatedAt @map("updated_at")
+
+  @@map("court_requests")
+}
+
+enum Role {
+  STUDENT
+  GUARD
+  ADMIN
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
