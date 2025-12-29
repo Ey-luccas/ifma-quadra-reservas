@@ -5,7 +5,7 @@ import axios, { AxiosError, AxiosInstance } from 'axios';
  * Em produção, usa /api (proxy reverso do Nginx)
  * Em desenvolvimento, pode usar variável de ambiente VITE_API_URL
  */
-export const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+export const API_BASE_URL = import.meta?.env?.VITE_API_URL || '/api';
 
 /**
  * Cria instância do axios com configurações padrão
