@@ -23,6 +23,15 @@ export function createApp(): Express {
     })
   );
 
+  // Rota raiz - verificação de status da API
+  app.get('/', (req, res) => {
+    res.json({
+      status: 'ok',
+      service: 'IFMA Quadra API',
+      message: 'API rodando corretamente',
+    });
+  });
+
   // Health check
   app.get('/health', (req, res) => {
     res.json({ status: 'ok', message: 'API está funcionando' });
