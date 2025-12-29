@@ -17,7 +17,7 @@ export const env = {
   // Server
   PORT: parseInt(process.env.PORT || '3001', 10),
   
-  // Frontend URL (para CORS)
+  // Frontend URL (para CORS) - pode ser uma URL ou múltiplas separadas por vírgula
   FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:5173',
   
   // Setup Key (para criar usuários admin/guard em desenvolvimento)

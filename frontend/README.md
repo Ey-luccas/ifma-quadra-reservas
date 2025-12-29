@@ -14,7 +14,7 @@ Frontend desenvolvido em React + Vite + TypeScript + Tailwind CSS para gerenciam
 ## 📋 Pré-requisitos
 
 - Node.js 18+ instalado
-- Backend rodando em `http://localhost:3001`
+- Backend rodando em `/api` (proxy Nginx em produção) ou `http://localhost:3001` (desenvolvimento)
 - npm ou yarn
 
 ## 🔧 Instalação
@@ -140,7 +140,7 @@ O sistema usa JWT armazenado no `localStorage`. O token é automaticamente inclu
 
 ## 🔗 Integração com Backend
 
-O frontend consome a API em `http://localhost:3001`. A URL pode ser alterada em `src/config/api.ts`.
+O frontend consome a API usando `/api` como base URL (proxy Nginx em produção). Em desenvolvimento, pode ser configurado via `VITE_API_URL` em `src/config/api.ts`.
 
 Todas as requisições autenticadas incluem automaticamente o header:
 ```
